@@ -1,21 +1,22 @@
 export default function orderByProps(obj, targetPropsArr) {
     let resultArr = [];
+    const copyOfObj = { ...obj };
 
-    for (let item of targetPropsArr) {
-        for (let prop in obj) {
-            if (item.includes(prop)) {
-                resultArr.push({ key: item, value: obj[prop] });
-                delete obj[prop];
+    for (let key of targetPropsArr) {
+        for (let prop in copyOfObj) {
+            if (key === prop) {
+                resultArr.push({ key: prop, value: copyOfObj[prop] });
+                delete copyOfObj[prop];
             }
         }
     }
 
-    const sortedArr = Object.keys(obj).sort();
+    const remainingPropsArr = Object.keys(copyOfObj).sort();
 
-    for (let item of sortedArr) {
-        for (let prop in obj) {
-            if (item.includes(prop)) {
-                resultArr.push({ key: item, value: obj[prop] });
+    for (let key of remainingPropsArr) {
+        for (let prop in copyOfObj) {
+            if (key === prop) {
+                resultArr.push({ key: prop, value: copyOfObj[prop] });
             }
         }
     }
